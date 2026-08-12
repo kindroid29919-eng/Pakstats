@@ -94,10 +94,15 @@ function parseVsInput(rawText) {
     }
     const playerSpec = tokens[0];
     const mapTokens = tokens.slice(1).filter((t) => !/^x\d+$/i.test(t));
-    const players = playerSpec
+
+    // Shared/joint wins ("Ahad/Zekey bd") stay together as ONE entry with
+    // a combined display name, rather than being split into two players.
+    const displayName = playerSpec
       .split('/')
       .map((p) => p.trim())
-      .filter(Boolean);
+      .filter(Boolean)
+      .join('/');
+    const key = displayName.toLowerCase();
 
     const resolvedEmojis = [];
     for (const mt of mapTokens) {
@@ -109,14 +114,11 @@ function parseVsInput(rawText) {
       resolvedEmojis.push(MAP_EMOJI[canonical]);
     }
 
-    for (const p of players) {
-      const key = p.toLowerCase();
-      if (!playerMaps.has(key)) {
-        playerMaps.set(key, { display: p, emojis: [] });
-        order.push(key);
-      }
-      playerMaps.get(key).emojis.push(...resolvedEmojis);
+    if (!playerMaps.has(key)) {
+      playerMaps.set(key, { display: displayName, emojis: [] });
+      order.push(key);
     }
+    playerMaps.get(key).emojis.push(...resolvedEmojis);
   }
 
   if (order.length === 0) {
@@ -154,12 +156,7 @@ function buildVsMessage(parsed, vsNumber) {
   lines.push(`${EMOJIS.SWORDS} | ${parsed.score}`);
   lines.push('');
 
-  const bracketed = parsed.playerLines.map((text, i) => {
-    let line = `${EMOJIS.CROWN_PAK} | ${text}`;
-    if (i === 0) line = '«' + line;
-    if (i === parsed.playerLines.length - 1) line = line + '»';
-    return line;
-  });
+  const bracketed = parsed.playerLines.map((text) => `${EMOJIS.CROWN_PAK} | ${text}`);
   lines.push(...bracketed);
 
   if (parsed.mvp || parsed.note) {
