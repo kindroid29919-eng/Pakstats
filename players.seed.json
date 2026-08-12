@@ -1,0 +1,98 @@
+[
+  {
+    "name": "Player 1",
+    "image": "player01.png",
+    "strengths": ["Strength A", "Strength B"],
+    "weaknesses": ["Weakness A"]
+  },
+  {
+    "name": "Player 2",
+    "image": "player02.png",
+    "strengths": ["Strength A"],
+    "weaknesses": ["Weakness A", "Weakness B"]
+  },
+  {
+    "name": "Player 3",
+    "image": "player03.png",
+    "strengths": ["Strength A"],
+    "weaknesses": ["Weakness A"]
+  },
+  {
+    "name": "Player 4",
+    "image": "player04.png",
+    "strengths": ["Strength A"],
+    "weaknesses": ["Weakness A"]
+  },
+  {
+    "name": "Player 5",
+    "image": "player05.png",
+    "strengths": ["Strength A"],
+    "weaknesses": ["Weakness A"]
+  },
+  {
+    "name": "Player 6",
+    "image": "player06.png",
+    "strengths": ["Strength A"],
+    "weaknesses": ["Weakness A"]
+  },
+  {
+    "name": "Player 7",
+    "image": "player07.png",
+    "strengths": ["Strength A"],
+    "weaknesses": ["Weakness A"]
+  },
+  {
+    "name": "Player 8",
+    "image": "player08.png",
+    "strengths": ["Strength A"],
+    "weaknesses": ["Weakness A"]
+  },
+  {
+    "name": "Player 9",
+    "image": "player09.png",
+    "strengths": ["Strength A"],
+    "weaknesses": ["Weakness A"]
+  },
+  {
+    "name": "Player 10",
+    "image": "player10.png",
+    "strengths": ["Strength A"],
+    "weaknesses": ["Weakness A"]
+  },
+  {
+    "name": "Player 11",
+    "image": "player11.png",
+    "strengths": ["Strength A"],
+    "weaknesses": ["Weakness A"]
+  },
+  {
+    "name": "Player 12",
+    "image": "player12.png",
+    "strengths": ["Strength A"],
+    "weaknesses": ["Weakness A"]
+  },
+  {
+    "name": "Player 13",
+    "image": "player13.png",
+    "strengths": ["Strength A"],
+    "weaknesses": ["Weakness A"]
+  },
+  {
+    "name": "Player 14",
+    "image": "player14.png",
+    "strengths": ["Strength A"],
+    "weaknesses": ["Weakness A"]
+  },
+  {
+    "name": "Player 15",
+    "image": "player15.png",
+    "strengths": ["Strength A"],
+    "weaknesses": ["Weakness A"]
+  },
+  {
+    "name": "Player 16",
+    "image": "player16.png",
+    "strengths": ["Strength A"],
+    "weaknesses": ["Weakness A"]
+  }
+]
