@@ -21,8 +21,15 @@ db.exec(`
   );
 `);
 
-function ensurePlayer(name) {
-  db.prepare(`INSERT OR IGNORE INTO stats (name, wins, tw) VALUES (?, 0, 0)`).run(name);
+// Creates the row if it doesn't exist yet. initialWins/initialTw are only
+// used the very first time a player is seen (e.g. from players.seed.json);
+// once a row exists, INSERT OR IGNORE will never overwrite it.
+function ensurePlayer(name, initialWins = 0, initialTw = 0) {
+  db.prepare(`INSERT OR IGNORE INTO stats (name, wins, tw) VALUES (?, ?, ?)`).run(
+    name,
+    initialWins,
+    initialTw
+  );
 }
 
 function getStats(name) {

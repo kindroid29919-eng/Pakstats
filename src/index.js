@@ -2,7 +2,7 @@ const path = require('path');
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const config = require('./config');
 const { addWins, addTW } = require('./db');
-const { getRankedPlayers, findRankedPlayer } = require('./players');
+const { getRankedPlayers, findRankedPlayer, findRankedPlayerByDiscordId } = require('./players');
 const { buildPlayerEmbed, buildRosterEmbed } = require('./utils/embeds');
 
 const ASSETS_DIR = path.join(__dirname, '..', 'assets', 'players');
@@ -78,9 +78,17 @@ client.on('messageCreate', async (message) => {
 });
 
 async function handleStats(message, args) {
+  // "pak stats" with no name -> look up the caller by their Discord ID.
   if (args.length === 0) {
-    return message.reply('Usage: `pak stats <player name>`');
+    const player = findRankedPlayerByDiscordId(message.author.id);
+    if (!player) {
+      return message.reply("You are not in team Pak's active roster.");
+    }
+    const { embeds, files } = buildPlayerEmbed(player, ASSETS_DIR);
+    return message.reply({ embeds, files });
   }
+
+  // "pak stats <name>" -> look up any player by name.
   const query = args.join(' ');
   const player = findRankedPlayer(query);
   if (!player) {
@@ -140,7 +148,8 @@ async function handleHelp(message) {
   return message.reply(
     [
       '**Pak Stats Commands**',
-      "`pak stats <player>` — Show a player's stats",
+      '`pak stats` — Show your own stats (matched by your Discord ID)',
+      "`pak stats <player>` — Show another player's stats by name",
       '`pak roster` — Show the full team roster',
       '`pak addwins <player> <amount>` — (owner only) Add wins',
       '`pak addtw <player> <amount>` — (owner only) Add teamwork',

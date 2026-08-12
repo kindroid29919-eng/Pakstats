@@ -13,7 +13,7 @@ function computeRating(wins, tw) {
 // Merge static seed data (name/image/strengths/weaknesses) with the
 // live wins/TW numbers stored in SQLite.
 function getAllPlayersWithStats() {
-  seed.forEach((p) => ensurePlayer(p.name));
+  seed.forEach((p) => ensurePlayer(p.name, p.wins || 0, p.tw || 0));
   const dbStats = getAllStats();
   const statMap = new Map(dbStats.map((s) => [s.name.toLowerCase(), s]));
 
@@ -55,10 +55,18 @@ function findRankedPlayer(query) {
   );
 }
 
+// Look up a player by their Discord user ID (used for "pak stats" with no
+// name, so a player can check their own stats).
+function findRankedPlayerByDiscordId(discordId) {
+  const ranked = getRankedPlayers();
+  return ranked.find((p) => p.id === discordId);
+}
+
 module.exports = {
   seed,
   computeRating,
   getAllPlayersWithStats,
   getRankedPlayers,
   findRankedPlayer,
+  findRankedPlayerByDiscordId,
 };
