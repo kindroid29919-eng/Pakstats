@@ -8,7 +8,8 @@ The prefix is **`pak `** (the word "pak" followed by a space), case-insensitive.
 
 | Command | Who | Description |
 |---|---|---|
-| `pak stats <player>` | anyone | Show a player's stats (picture, wins, TW, strengths, weaknesses, rating, rank) |
+| `pak stats` | anyone | Show **your own** stats, matched by your Discord user ID. If your ID isn't on the roster, the bot replies "You are not in team Pak's active roster." |
+| `pak stats <player>` | anyone | Show another player's stats by name (picture, wins, TW, strengths, weaknesses, rating, rank) |
 | `pak roster` | anyone | Show the full team roster, ranked by wins |
 | `pak addwins <player> <amount>` | owner only | Add wins to a player (use a negative number to subtract) |
 | `pak addtw <player> <amount>` | owner only | Add teamwork points to a player |
@@ -41,22 +42,60 @@ pak-stats-bot/
 
 ### Editing player data
 
-Open `players.seed.json` and fill in each of the 16 entries:
+`players.seed.json` is already filled in with the 16 players' names, Discord
+IDs, and starting wins/TW:
 
 ```json
 {
-  "name": "Real Player Name",
-  "image": "player01.png",
-  "strengths": ["Fast rotations", "Great callouts"],
-  "weaknesses": ["Inconsistent aim"]
+  "id": "1507496291725213749",
+  "name": "Ahad",
+  "image": "ahad.png",
+  "wins": 406,
+  "tw": 22,
+  "strengths": [],
+  "weaknesses": []
 }
 ```
 
-- `image` must match a filename you drop into `assets/players/`.
-- Wins and TW are **not** in this file — they live in the SQLite database and
-  are only changed with `pak addwins` / `pak addtw`, starting at 0 for every
-  player.
+- `id` is the player's Discord user ID — this is what powers `pak stats`
+  (no name) so a player can pull up their own card. If your Discord ID isn't
+  in the file, the bot replies "You are not in team Pak's active roster."
+- `wins` / `tw` here are only used to **seed** the database the first time
+  the bot ever sees that player. After that, they live in SQLite and only
+  change via `pak addwins` / `pak addtw` — editing the numbers in this file
+  later won't retroactively change an already-seeded player.
+- `strengths` / `weaknesses` are currently empty — fill them in as arrays of
+  short strings, e.g. `["Fast rotations", "Great callouts"]`.
+- `image` must match a filename in `assets/players/` (see table below).
 - The roster image goes at `assets/roster.png`.
+
+### Image files needed
+
+Upload these exact filenames into `assets/players/` (one per player), plus
+the roster image:
+
+| File | Player |
+|---|---|
+| `assets/players/ahad.png` | Ahad |
+| `assets/players/soman.png` | Soman |
+| `assets/players/insane.png` | Insane |
+| `assets/players/fighter.png` | Fighter |
+| `assets/players/phantom.png` | Phantom |
+| `assets/players/rida.png` | Rida |
+| `assets/players/zekey.png` | Zekey |
+| `assets/players/pikr.png` | Pikr |
+| `assets/players/arhaam.png` | Arhaam |
+| `assets/players/bablu.png` | Bablu |
+| `assets/players/rage.png` | Rage |
+| `assets/players/spark.png` | Spark |
+| `assets/players/rajab.png` | Rajab |
+| `assets/players/soul.png` | Soul |
+| `assets/players/best.png` | Best |
+| `assets/players/rex.png` | Rex |
+| `assets/roster.png` | Full team roster graphic |
+
+If an image file is missing, the bot just skips the picture and still shows
+the text stats — nothing breaks.
 
 > Note: this file seeds each player's name/image/strengths/weaknesses on
 > every startup and is matched by name against the database. If you rename a

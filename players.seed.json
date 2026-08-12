@@ -1,98 +1,146 @@
 [
   {
-    "name": "Player 1",
-    "image": "player01.png",
-    "strengths": ["Strength A", "Strength B"],
-    "weaknesses": ["Weakness A"]
+    "id": "1507496291725213749",
+    "name": "Ahad",
+    "image": "ahad.png",
+    "wins": 406,
+    "tw": 22,
+    "strengths": ["Consistent wins"],
+    "weaknesses": ["Cove", "SuperSlide"]
   },
   {
-    "name": "Player 2",
-    "image": "player02.png",
-    "strengths": ["Strength A"],
-    "weaknesses": ["Weakness A", "Weakness B"]
+    "id": "847837682478088233",
+    "name": "Soman",
+    "image": "soman.png",
+    "wins": 334,
+    "tw": 15,
+    "strengths": ["Good runs"],
+    "weaknesses": ["Inactivity"]
   },
   {
-    "name": "Player 3",
-    "image": "player03.png",
-    "strengths": ["Strength A"],
-    "weaknesses": ["Weakness A"]
+    "id": "1240580585563361332",
+    "name": "Insane",
+    "image": "insane.png",
+    "wins": 317,
+    "tw": 22,
+    "strengths": [],
+    "weaknesses": ["Everything"]
   },
   {
-    "name": "Player 4",
-    "image": "player04.png",
-    "strengths": ["Strength A"],
-    "weaknesses": ["Weakness A"]
+    "id": "861945047222059008",
+    "name": "Fighter",
+    "image": "fighter.png",
+    "wins": 306,
+    "tw": 14,
+    "strengths": ["Experience"],
+    "weaknesses": ["Bodying mates"]
   },
   {
-    "name": "Player 5",
-    "image": "player05.png",
-    "strengths": ["Strength A"],
-    "weaknesses": ["Weakness A"]
+    "id": "1188040830640988221",
+    "name": "Phantom",
+    "image": "phantom.png",
+    "wins": 296,
+    "tw": 4,
+    "strengths": ["Good runs"],
+    "weaknesses": ["No TW"]
   },
   {
-    "name": "Player 6",
-    "image": "player06.png",
-    "strengths": ["Strength A"],
-    "weaknesses": ["Weakness A"]
+    "id": "1385233498994114643",
+    "name": "Rida",
+    "image": "rida.png",
+    "wins": 158,
+    "tw": 0,
+    "strengths": ["Carry job"],
+    "weaknesses": ["Fighter"]
   },
   {
-    "name": "Player 7",
-    "image": "player07.png",
-    "strengths": ["Strength A"],
-    "weaknesses": ["Weakness A"]
+    "id": "1456384580104884438",
+    "name": "Zekey",
+    "image": "zekey.png",
+    "wins": 122,
+    "tw": 3,
+    "strengths": ["Headboosts"],
+    "weaknesses": ["Leads"]
   },
   {
-    "name": "Player 8",
-    "image": "player08.png",
-    "strengths": ["Strength A"],
-    "weaknesses": ["Weakness A"]
+    "id": "1336155226671157283",
+    "name": "Pikr",
+    "image": "pikr.png",
+    "wins": 118,
+    "tw": 2,
+    "strengths": ["Consistent wins"],
+    "weaknesses": ["SuperSlide", "Ping"]
   },
   {
-    "name": "Player 9",
-    "image": "player09.png",
-    "strengths": ["Strength A"],
-    "weaknesses": ["Weakness A"]
+    "id": "1178568519277891647",
+    "name": "Arhaam",
+    "image": "arhaam.png",
+    "wins": 86,
+    "tw": 1,
+    "strengths": ["Speedruns"],
+    "weaknesses": ["SuperSlide"]
   },
   {
-    "name": "Player 10",
-    "image": "player10.png",
-    "strengths": ["Strength A"],
-    "weaknesses": ["Weakness A"]
+    "id": "1380817433065160777",
+    "name": "Bablu",
+    "image": "bablu.png",
+    "wins": 26,
+    "tw": 2,
+    "strengths": ["Good TW"],
+    "weaknesses": ["Speedruns"]
   },
   {
-    "name": "Player 11",
-    "image": "player11.png",
-    "strengths": ["Strength A"],
-    "weaknesses": ["Weakness A"]
+    "id": "1243257575575654492",
+    "name": "Rage",
+    "image": "rage.png",
+    "wins": 21,
+    "tw": 0,
+    "strengths": ["Good elim player"],
+    "weaknesses": ["Cove"]
   },
   {
-    "name": "Player 12",
-    "image": "player12.png",
-    "strengths": ["Strength A"],
-    "weaknesses": ["Weakness A"]
+    "id": "1111929712944623706",
+    "name": "Spark",
+    "image": "spark.png",
+    "wins": 10,
+    "tw": 2,
+    "strengths": [],
+    "weaknesses": ["Yapping", "Kills mates", "Sells lead"]
   },
   {
-    "name": "Player 13",
-    "image": "player13.png",
-    "strengths": ["Strength A"],
-    "weaknesses": ["Weakness A"]
+    "id": "1197564081725505731",
+    "name": "Rajab",
+    "image": "rajab.png",
+    "wins": 7,
+    "tw": 1,
+    "strengths": ["Teamwork"],
+    "weaknesses": ["Speedruns"]
   },
   {
-    "name": "Player 14",
-    "image": "player14.png",
-    "strengths": ["Strength A"],
-    "weaknesses": ["Weakness A"]
+    "id": "1272449438345859143",
+    "name": "Soul",
+    "image": "soul.png",
+    "wins": 5,
+    "tw": 1,
+    "strengths": ["Elimination maps"],
+    "weaknesses": ["Qualifying R2"]
   },
   {
-    "name": "Player 15",
-    "image": "player15.png",
-    "strengths": ["Strength A"],
-    "weaknesses": ["Weakness A"]
+    "id": "1456584746594467993",
+    "name": "Best",
+    "image": "best.png",
+    "wins": 4,
+    "tw": 0,
+    "strengths": ["Elimination maps"],
+    "weaknesses": ["Race maps"]
   },
   {
-    "name": "Player 16",
-    "image": "player16.png",
-    "strengths": ["Strength A"],
-    "weaknesses": ["Weakness A"]
+    "id": "1113681687059116093",
+    "name": "Rex",
+    "image": "rex.png",
+    "wins": 0,
+    "tw": 0,
+    "strengths": ["BD"],
+    "weaknesses": ["Everything"]
   }
 ]
