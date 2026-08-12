@@ -21,6 +21,27 @@ db.exec(`
   );
 `);
 
+// Single-row table that remembers the last "Vs #___" number used, so
+// future "pak vs" results can auto-increment without the user retyping it.
+db.exec(`
+  CREATE TABLE IF NOT EXISTS vs_counter (
+    id INTEGER PRIMARY KEY CHECK (id = 1),
+    value INTEGER NOT NULL
+  );
+`);
+
+function getVsCounter() {
+  const row = db.prepare(`SELECT value FROM vs_counter WHERE id = 1`).get();
+  return row ? row.value : null;
+}
+
+function setVsCounter(value) {
+  db.prepare(
+    `INSERT INTO vs_counter (id, value) VALUES (1, ?)
+     ON CONFLICT(id) DO UPDATE SET value = excluded.value`
+  ).run(value);
+}
+
 // Creates the row if it doesn't exist yet. initialWins/initialTw are only
 // used the very first time a player is seen (e.g. from players.seed.json);
 // once a row exists, INSERT OR IGNORE will never overwrite it.
@@ -53,4 +74,13 @@ function addTW(name, amount) {
   return getStats(name);
 }
 
-module.exports = { db, ensurePlayer, getStats, getAllStats, addWins, addTW };
+module.exports = {
+  db,
+  ensurePlayer,
+  getStats,
+  getAllStats,
+  addWins,
+  addTW,
+  getVsCounter,
+  setVsCounter,
+};

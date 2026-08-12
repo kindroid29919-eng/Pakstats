@@ -1,9 +1,10 @@
 const path = require('path');
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const config = require('./config');
-const { addWins, addTW } = require('./db');
+const { addWins, addTW, getVsCounter, setVsCounter } = require('./db');
 const { getRankedPlayers, findRankedPlayer, findRankedPlayerByDiscordId } = require('./players');
 const { buildPlayerEmbed, buildRosterEmbed } = require('./utils/embeds');
+const { parseVsInput, buildVsMessage } = require('./vsBuilder');
 
 const ASSETS_DIR = path.join(__dirname, '..', 'assets', 'players');
 const ROSTER_IMAGE_PATH = path.join(__dirname, '..', 'assets', 'roster.png');
@@ -47,9 +48,13 @@ client.on('messageCreate', async (message) => {
     const rest = content.slice(config.prefix.length).trim();
     if (!rest) return;
 
-    const parts = rest.split(/\s+/);
-    const cmd = parts[0].toLowerCase();
-    const args = parts.slice(1);
+    // Split off just the command word; keep the remainder's internal
+    // newlines intact (needed for the multi-line "pak vs" command).
+    const firstWordMatch = rest.match(/^(\S+)([\s\S]*)$/);
+    if (!firstWordMatch) return;
+    const cmd = firstWordMatch[1].toLowerCase();
+    const remainder = firstWordMatch[2].trim();
+    const args = remainder.length ? remainder.split(/\s+/) : [];
 
     switch (cmd) {
       case 'stats':
@@ -63,6 +68,9 @@ client.on('messageCreate', async (message) => {
         break;
       case 'addtw':
         await handleAddTW(message, args);
+        break;
+      case 'vs':
+        await handleVs(message, remainder);
         break;
       case 'help':
         await handleHelp(message);
@@ -144,6 +152,62 @@ async function handleAddTW(message, args) {
   return message.reply(`✅ ${player.name} TW updated: **${updated.tw}** (added ${amount}).`);
 }
 
+async function handleVs(message, rawText) {
+  if (!rawText) {
+    return message.reply(
+      [
+        'Usage:',
+        '```',
+        'pak vs',
+        'teams: Pakistan vs Japan',
+        'score: 4-6',
+        'cup: Asian Cup Federation',
+        'number: 725',
+        'Zekey ps sr',
+        'Ahad sgr sc',
+        'mvp: Ahad',
+        'note: I play with tests and carry',
+        '```',
+        '`number:` is only needed the first time — after that it auto-increments.',
+        '`cup:` is optional and defaults to "Friendly Vs".',
+      ].join('\n')
+    );
+  }
+
+  const parsed = parseVsInput(rawText);
+  if (parsed.error) {
+    return message.reply(parsed.error);
+  }
+
+  let vsNumber;
+  if (parsed.explicitNumber !== null) {
+    vsNumber = parsed.explicitNumber;
+  } else {
+    const current = getVsCounter();
+    if (current === null) {
+      return message.reply(
+        'No Vs number has been set yet. Include `number: 725` once to start the sequence — future results will auto-increment from there.'
+      );
+    }
+    vsNumber = current + 1;
+  }
+  setVsCounter(vsNumber);
+
+  if (parsed.warnings && parsed.warnings.length > 0) {
+    await message.channel.send(`⚠️ ${parsed.warnings.join('\n⚠️ ')}`);
+  }
+
+  const text = buildVsMessage(parsed, vsNumber);
+
+  // Explicitly allow the @everyone mention so the ping actually fires
+  // (requires the bot to have the "Mention @everyone" permission in this
+  // channel/server).
+  return message.channel.send({
+    content: text,
+    allowedMentions: { parse: ['everyone'] },
+  });
+}
+
 async function handleHelp(message) {
   return message.reply(
     [
@@ -153,6 +217,7 @@ async function handleHelp(message) {
       '`pak roster` — Show the full team roster',
       '`pak addwins <player> <amount>` — (owner only) Add wins',
       '`pak addtw <player> <amount>` — (owner only) Add teamwork',
+      '`pak vs` — Post a formatted match result (see `pak vs` with no data for usage)',
     ].join('\n')
   );
 }
