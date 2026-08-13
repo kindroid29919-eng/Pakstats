@@ -83,13 +83,26 @@ function parseVsInput(rawText) {
   }
 
   const order = [];
-  const playerMaps = new Map(); // lowercase name -> { display, emojis: [] }
+  const playerMaps = new Map(); // lowercase name -> { display, parts: [] }
   const warnings = [];
 
-  for (const line of resultLines) {
-    const tokens = line.split(/\s+/);
+  for (const rawLine of resultLines) {
+    // Pull out any [free text] annotations first (e.g. "[1v2]", "[tw zekey]")
+    // so they don't get parsed as map tokens. They're re-attached to the
+    // output after the map emojis, in the order they appeared.
+    const annotations = [];
+    const line = rawLine
+      .replace(/\[([^\]]*)\]/g, (_match, inner) => {
+        const trimmed = inner.trim();
+        if (trimmed) annotations.push(trimmed);
+        return ' ';
+      })
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    const tokens = line.split(/\s+/).filter(Boolean);
     if (tokens.length < 2) {
-      warnings.push(`Couldn't parse line: "${line}"`);
+      warnings.push(`Couldn't parse line: "${rawLine}"`);
       continue;
     }
     const playerSpec = tokens[0];
@@ -104,21 +117,24 @@ function parseVsInput(rawText) {
       .join('/');
     const key = displayName.toLowerCase();
 
-    const resolvedEmojis = [];
+    const resolvedParts = [];
     for (const mt of mapTokens) {
       const canonical = resolveMap(mt);
       if (!canonical) {
-        warnings.push(`Unknown map "${mt}" on line: "${line}"`);
+        warnings.push(`Unknown map "${mt}" on line: "${rawLine}"`);
         continue;
       }
-      resolvedEmojis.push(MAP_EMOJI[canonical]);
+      resolvedParts.push(MAP_EMOJI[canonical]);
+    }
+    for (const note of annotations) {
+      resolvedParts.push(`[${note}]`);
     }
 
     if (!playerMaps.has(key)) {
-      playerMaps.set(key, { display: displayName, emojis: [] });
+      playerMaps.set(key, { display: displayName, parts: [] });
       order.push(key);
     }
-    playerMaps.get(key).emojis.push(...resolvedEmojis);
+    playerMaps.get(key).parts.push(...resolvedParts);
   }
 
   if (order.length === 0) {
@@ -127,7 +143,7 @@ function parseVsInput(rawText) {
 
   const playerLines = order.map((key) => {
     const p = playerMaps.get(key);
-    return `${p.display} ${p.emojis.join(' ')}`.trim();
+    return `${p.display} ${p.parts.join(' ')}`.trim();
   });
 
   return {
@@ -152,7 +168,7 @@ function buildVsMessage(parsed, vsNumber) {
   lines.push(`**Vs #${vsNumber}`);
   lines.push(`⚔️ | ${parsed.teamA.display} vs ${parsed.teamB.display}`);
   if (parsed.region) lines.push(`🌏 | ${parsed.region}`);
-  lines.push(`🏆| ${parsed.cupLine}`);
+  lines.push(`🏆 | ${parsed.cupLine}`);
   lines.push(`${EMOJIS.SWORDS} | ${parsed.score}`);
   lines.push('');
 
