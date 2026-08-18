@@ -7,6 +7,7 @@ const ownerIds = (process.env.OWNER_IDS || '')
 
 module.exports = {
   token: process.env.DISCORD_TOKEN,
+  guildId: process.env.GUILD_ID || '',
   ownerIds,
   // Prefix requires a trailing space, e.g. "pak stats Bob"
   prefix: 'pak ',
