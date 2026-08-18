@@ -6,7 +6,8 @@
   "type": "commonjs",
   "scripts": {
     "start": "node src/index.js",
-    "ban": "node src/ban.js"
+    "ban": "node src/ban.js",
+    "say": "node src/say.js"
   },
   "dependencies": {
     "better-sqlite3": "^11.3.0",
