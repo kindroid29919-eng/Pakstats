@@ -136,11 +136,27 @@
   },
   {
     "id": "1113681687059116093",
-    "name": "Rex",
+    "name": "Zrex",
     "image": "rex.png",
     "wins": 0,
     "tw": 0,
     "strengths": ["BD"],
     "weaknesses": ["Everything"]
+  },
+  {
+    "name": "Nabeel",
+    "image": "nabeel.png",
+    "wins": 0,
+    "tw": 0,
+    "strengths": [],
+    "weaknesses": []
+  },
+  {
+    "name": "Ahmed",
+    "image": "ahmed.png",
+    "wins": 0,
+    "tw": 0,
+    "strengths": [],
+    "weaknesses": []
   }
 ]

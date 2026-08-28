@@ -1,6 +1,6 @@
 # Pak Stats — Discord Bot
 
-A small, private Discord bot that tracks stats for up to 16 players.
+A small, private Discord bot that tracks stats for up to 18 players.
 
 ## Commands
 
@@ -22,7 +22,7 @@ Player name matching is case-insensitive and also matches on a partial name
 configurable, default win=2, tw=1). It recalculates automatically any time
 wins or TW change — it isn't stored, it's computed on the fly.
 
-**Rank** = position among all 16 players sorted by Wins (ties broken by TW,
+**Rank** = position among all 18 players sorted by Wins (ties broken by TW,
 then name). Also recalculated automatically, never stored.
 
 ## Project layout
@@ -31,10 +31,10 @@ then name). Also recalculated automatically, never stored.
 pak-stats-bot/
 ├── players.seed.json      ← EDIT THIS: names, strengths, weaknesses, image filenames
 ├── assets/
-│   ├── players/            ← put the 16 player pictures here
+│   ├── players/            ← put the 18 player pictures here
 │   │   ├── player01.png
 │   │   ├── ...
-│   │   └── player16.png
+│   │   └── player18.png
 │   └── roster.png          ← the full-roster picture
 ├── data/                    ← SQLite database lives here (wins/TW only)
 └── src/                     ← bot code
@@ -42,7 +42,7 @@ pak-stats-bot/
 
 ### Editing player data
 
-`players.seed.json` is already filled in with the 16 players' names, Discord
+`players.seed.json` is already filled in with the 18 players' names, Discord
 IDs, and starting wins/TW:
 
 ```json
@@ -91,7 +91,7 @@ the roster image:
 | `assets/players/rajab.png` | Rajab |
 | `assets/players/soul.png` | Soul |
 | `assets/players/best.png` | Best |
-| `assets/players/rex.png` | Rex |
+| `assets/players/rex.png` | Zrex |
 | `assets/roster.png` | Full team roster graphic |
 
 If an image file is missing, the bot just skips the picture and still shows
@@ -147,5 +147,5 @@ work smoothly in threads/channels with history.
   or the Railway Volume path in production). Everything else (name, picture,
   strengths, weaknesses) is static and lives in `players.seed.json` +
   `assets/`, so it's easy to hand-edit without touching a database.
-- Max 16 players is enforced by convention (the seed file); the bot will warn
-  in the logs if you add more than 16 entries but won't hard-block it.
+- Max 18 players is enforced by convention (the seed file); the bot will warn
+  in the logs if you add more than 18 entries but won't hard-block it.

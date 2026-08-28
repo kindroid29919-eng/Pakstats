@@ -2,8 +2,8 @@ const seed = require('../players.seed.json');
 const { getAllStats, ensurePlayer } = require('./db');
 const config = require('./config');
 
-if (seed.length > 16) {
-  console.warn(`Warning: players.seed.json has ${seed.length} players, but the max is 16.`);
+if (seed.length > 18) {
+  console.warn(`Warning: players.seed.json has ${seed.length} players, but the max is 18.`);
 }
 
 function computeRating(wins, tw) {
