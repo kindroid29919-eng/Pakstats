@@ -3,7 +3,7 @@
     "id": "1507496291725213749",
     "name": "Ahad",
     "image": "ahad.png",
-    "wins": 406,
+    "wins": 418,
     "tw": 22,
     "strengths": ["Consistent wins"],
     "weaknesses": ["Cove", "SuperSlide"]
@@ -12,8 +12,8 @@
     "id": "847837682478088233",
     "name": "Soman",
     "image": "soman.png",
-    "wins": 334,
-    "tw": 15,
+    "wins": 364,
+    "tw": 18,
     "strengths": ["Good runs"],
     "weaknesses": ["Inactivity"]
   },
@@ -21,7 +21,7 @@
     "id": "1240580585563361332",
     "name": "Insane",
     "image": "insane.png",
-    "wins": 317,
+    "wins": 337,
     "tw": 22,
     "strengths": [],
     "weaknesses": ["Everything"]
@@ -30,8 +30,8 @@
     "id": "861945047222059008",
     "name": "Fighter",
     "image": "fighter.png",
-    "wins": 306,
-    "tw": 14,
+    "wins": 343,
+    "tw": 16,
     "strengths": ["Experience"],
     "weaknesses": ["Bodying mates"]
   },
@@ -39,7 +39,7 @@
     "id": "1188040830640988221",
     "name": "Phantom",
     "image": "phantom.png",
-    "wins": 296,
+    "wins": 317,
     "tw": 4,
     "strengths": ["Good runs"],
     "weaknesses": ["No TW"]
@@ -48,7 +48,7 @@
     "id": "1385233498994114643",
     "name": "Rida",
     "image": "rida.png",
-    "wins": 158,
+    "wins": 165,
     "tw": 0,
     "strengths": ["Carry job"],
     "weaknesses": ["Fighter"]
@@ -57,8 +57,8 @@
     "id": "1456384580104884438",
     "name": "Zekey",
     "image": "zekey.png",
-    "wins": 122,
-    "tw": 3,
+    "wins": 142,
+    "tw": 4,
     "strengths": ["Headboosts"],
     "weaknesses": ["Leads"]
   },
@@ -66,8 +66,8 @@
     "id": "1336155226671157283",
     "name": "Pikr",
     "image": "pikr.png",
-    "wins": 118,
-    "tw": 2,
+    "wins": 212,
+    "tw": 5,
     "strengths": ["Consistent wins"],
     "weaknesses": ["SuperSlide", "Ping"]
   },
@@ -75,7 +75,7 @@
     "id": "1178568519277891647",
     "name": "Arhaam",
     "image": "arhaam.png",
-    "wins": 86,
+    "wins": 91,
     "tw": 1,
     "strengths": ["Speedruns"],
     "weaknesses": ["SuperSlide"]
@@ -84,7 +84,7 @@
     "id": "1380817433065160777",
     "name": "Bablu",
     "image": "bablu.png",
-    "wins": 26,
+    "wins": 52,
     "tw": 2,
     "strengths": ["Good TW"],
     "weaknesses": ["Speedruns"]
@@ -93,7 +93,7 @@
     "id": "1243257575575654492",
     "name": "Rage",
     "image": "rage.png",
-    "wins": 21,
+    "wins": 44,
     "tw": 0,
     "strengths": ["Good elim player"],
     "weaknesses": ["Cove"]
@@ -111,7 +111,7 @@
     "id": "1197564081725505731",
     "name": "Rajab",
     "image": "rajab.png",
-    "wins": 7,
+    "wins": 12,
     "tw": 1,
     "strengths": ["Teamwork"],
     "weaknesses": ["Speedruns"]
@@ -120,8 +120,8 @@
     "id": "1272449438345859143",
     "name": "Soul",
     "image": "soul.png",
-    "wins": 5,
-    "tw": 1,
+    "wins": 35,
+    "tw": 4,
     "strengths": ["Elimination maps"],
     "weaknesses": ["Qualifying R2"]
   },
@@ -129,8 +129,8 @@
     "id": "1456584746594467993",
     "name": "Best",
     "image": "best.png",
-    "wins": 4,
-    "tw": 0,
+    "wins": 10,
+    "tw": 2,
     "strengths": ["Elimination maps"],
     "weaknesses": ["Race maps"]
   },
