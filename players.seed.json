@@ -135,28 +135,30 @@
     "weaknesses": ["Race maps"]
   },
   {
-    "id": "1113681687059116093",
+    "id": "855720337780899841",
     "name": "Zrex",
     "image": "rex.png",
-    "wins": 0,
-    "tw": 0,
-    "strengths": ["BD"],
-    "weaknesses": ["Everything"]
+    "wins": 33,
+    "tw": 1,
+    "strengths": ["idk"],
+    "weaknesses": ["idk"]
   },
   {
+    "id": "1108056772368941116",
     "name": "Nabeel",
     "image": "nabeel.png",
-    "wins": 0,
-    "tw": 0,
-    "strengths": [],
-    "weaknesses": []
+    "wins": 241,
+    "tw": 8,
+    "strengths": ["Yapping"],
+    "weaknesses": ["Skills"]
   },
   {
+    "id": "1422278850838139014",
     "name": "Ahmed",
     "image": "ahmed.png",
-    "wins": 0,
+    "wins": 10,
     "tw": 0,
-    "strengths": [],
-    "weaknesses": []
+    "strengths": ["High potential"],
+    "weaknesses": ["Less chances"]
   }
 ]
