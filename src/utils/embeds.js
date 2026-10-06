@@ -6,13 +6,11 @@ function buildPlayerEmbed(player, assetsDir) {
   const embed = new EmbedBuilder()
     .setTitle(`📊 ${player.name}`)
     .setColor(0x2b6cb0)
-    .addFields(
-      { name: "Rank", value: `#${player.rank}`, inline: true },
-      { name: "Rating", value: `${player.rating}`, inline: true },
-      { name: "\u200b", value: "\u200b", inline: true },
-      { name: "Wins", value: `${player.wins}`, inline: true },
-      { name: "Teamwork (TW)", value: `${player.tw}`, inline: true },
-      { name: "\u200b", value: "\u200b", inline: true },
+    .setDescription(
+      [
+        `**Rank:** #${player.rank}  •  **Rating:** ${player.rating}`,
+        `**Wins:** ${player.wins}  •  **Teamwork (TW):** ${player.tw}`,
+      ].join("\n"),
     );
 
   const files = [];
