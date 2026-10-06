@@ -9,7 +9,8 @@ function buildPlayerEmbed(player, assetsDir) {
     .setDescription(
       [
         `**Rank:** #${player.rank}  •  **Rating:** ${player.rating}`,
-        `**Wins:** ${player.wins}  •  **Teamwork (TW):** ${player.tw}`,
+        `**Wins:** ${player.wins}`,
+        `**Teamwork:** ${player.tw}`,
       ].join("\n"),
     );
 
