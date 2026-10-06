@@ -1,151 +1,69 @@
-# Pak Stats — Discord Bot
+# Team Pakistan Bot
 
-A small, private Discord bot that tracks stats for up to 18 players.
+One bot, one prefix (`.`). It combines the Pak Stats bot and the Team Pakistan
+role-management bot.
 
 ## Commands
 
-The prefix is **`pak `** (the word "pak" followed by a space), case-insensitive.
-
-| Command | Who | Description |
+| Command | Who | What it does |
 |---|---|---|
-| `pak stats` | anyone | Show **your own** stats, matched by your Discord user ID. If your ID isn't on the roster, the bot replies "You are not in team Pak's active roster." |
-| `pak stats <player>` | anyone | Show another player's stats by name (picture, wins, TW, strengths, weaknesses, rating, rank) |
-| `pak roster` | anyone | Show the full team roster, ranked by wins |
-| `pak addwins <player> <amount>` | owner only | Add wins to a player (use a negative number to subtract) |
-| `pak addtw <player> <amount>` | owner only | Add teamwork points to a player |
-| `pak help` | anyone | List commands |
+| `.stats` | anyone | Your own stats (matched by your Discord ID) |
+| `.stats <player>` | anyone | Another player's stats (partial names work) |
+| `.roster` | anyone | Full roster ranked by wins |
+| `.addwins <player> <amount>` | owner (`OWNER_IDS`) | Add wins (negative to subtract) |
+| `.addtw <player> <amount>` | owner (`OWNER_IDS`) | Add teamwork |
+| `.result` | anyone | Post a formatted match result (was `pak vs`). Run with no text for usage |
+| `.vs @members` | authorized roles | Give the VS role to up to 16 members |
+| `.vsrm @member` | authorized roles | Remove the VS role from one member |
+| `.vsrall` | authorized roles | Remove the VS role from everyone |
+| `.nick @member <name>` | Manage Nicknames | Nick role + nickname |
+| `.ea @member <name>` | Manage Nicknames | EA role + nickname |
+| `.help` | anyone | List commands |
 
-Player name matching is case-insensitive and also matches on a partial name
-(e.g. `pak stats sam` will match "Samuel" if no one else starts with "sam").
+`/config` (slash command, Manage Server) sets the VS / Nick / EA roles,
+nickname prefixes/suffixes, and which roles may use `.vs`, `.vsrm`, `.vsrall`.
 
-**Rating** = `wins * RATING_WIN_WEIGHT + tw * RATING_TW_WEIGHT` (weights are
-configurable, default win=2, tw=1). It recalculates automatically any time
-wins or TW change — it isn't stored, it's computed on the fly.
+**Rating** = `wins * RATING_WIN_WEIGHT + tw * RATING_TW_WEIGHT` (default 2 and 1),
+computed live. **Rank** = position by wins (ties: TW, then name).
 
-**Rank** = position among all 18 players sorted by Wins (ties broken by TW,
-then name). Also recalculated automatically, never stored.
+## Where data lives (read this before deploying)
 
-## Project layout
+Everything that changes at runtime is in **one SQLite file** (`DB_PATH`):
+wins/TW, the `.result` number counter, and the role settings. Nothing is
+re-seeded over it: `players.seed.json` only supplies names, Discord IDs and
+image filenames, and its `wins`/`tw` values are used only the first time a
+player is ever seen.
 
-```
-pak-stats-bot/
-├── players.seed.json      ← EDIT THIS: names, strengths, weaknesses, image filenames
-├── assets/
-│   ├── players/            ← put the 18 player pictures here
-│   │   ├── player01.png
-│   │   ├── ...
-│   │   └── player18.png
-│   └── roster.png          ← the full-roster picture
-├── data/                    ← SQLite database lives here (wins/TW only)
-└── src/                     ← bot code
-```
+The one-time "set all wins/TW to 0" reset is recorded inside the database. It
+runs once, then never again, so numbers you add with `.addwins`/`.addtw` are
+kept across restarts and redeploys, **as long as the file itself survives**.
 
-### Editing player data
+The file survives a redeploy only if it sits on persistent storage:
 
-`players.seed.json` is already filled in with the 18 players' names, Discord
-IDs, and starting wins/TW:
+- **Railway:** add a Volume (mount path `/data`) and set
+  `DB_PATH=/data/team-pakistan.sqlite`. If a Volume is attached and `DB_PATH` is
+  unset, the bot uses the Volume automatically.
+- **Replit:** deployments do not keep runtime-written files. Use Railway (or
+  any host with a persistent disk) for the live bot.
 
-```json
-{
-  "id": "1507496291725213749",
-  "name": "Ahad",
-  "image": "ahad.png",
-  "wins": 406,
-  "tw": 22,
-  "strengths": [],
-  "weaknesses": []
-}
-```
+On startup the log prints the database path and warns if it looks like it is
+on throw-away storage.
 
-- `id` is the player's Discord user ID — this is what powers `pak stats`
-  (no name) so a player can pull up their own card. If your Discord ID isn't
-  in the file, the bot replies "You are not in team Pak's active roster."
-- `wins` / `tw` here are only used to **seed** the database the first time
-  the bot ever sees that player. After that, they live in SQLite and only
-  change via `pak addwins` / `pak addtw` — editing the numbers in this file
-  later won't retroactively change an already-seeded player.
-- `strengths` / `weaknesses` are currently empty — fill them in as arrays of
-  short strings, e.g. `["Fast rotations", "Great callouts"]`.
-- `image` must match a filename in `assets/players/` (see table below).
-- The roster image goes at `assets/roster.png`.
+## Setup
 
-### Image files needed
+1. `npm install`
+2. Copy `.env.example` to `.env` and fill it in.
+3. Developer Portal → Bot → enable **Message Content Intent** and
+   **Server Members Intent**.
+4. `npm start`. The `/config` command registers itself on boot (global
+   commands can take a little while to appear the first time).
+5. Run `/config set`, `/config authorize` so the role commands know what to use.
 
-Upload these exact filenames into `assets/players/` (one per player), plus
-the roster image:
+Player pictures go in `assets/players/` (filenames in `players.seed.json`),
+the roster picture at `assets/roster.png`. Missing images are skipped.
 
-| File | Player |
-|---|---|
-| `assets/players/ahad.png` | Ahad |
-| `assets/players/soman.png` | Soman |
-| `assets/players/insane.png` | Insane |
-| `assets/players/fighter.png` | Fighter |
-| `assets/players/phantom.png` | Phantom |
-| `assets/players/rida.png` | Rida |
-| `assets/players/zekey.png` | Zekey |
-| `assets/players/pikr.png` | Pikr |
-| `assets/players/arhaam.png` | Arhaam |
-| `assets/players/bablu.png` | Bablu |
-| `assets/players/rage.png` | Rage |
-| `assets/players/spark.png` | Spark |
-| `assets/players/rajab.png` | Rajab |
-| `assets/players/soul.png` | Soul |
-| `assets/players/best.png` | Best |
-| `assets/players/rex.png` | Zrex |
-| `assets/roster.png` | Full team roster graphic |
+## Tools
 
-If an image file is missing, the bot just skips the picture and still shows
-the text stats — nothing breaks.
-
-> Note: this file seeds each player's name/image/strengths/weaknesses on
-> every startup and is matched by name against the database. If you rename a
-> player after they already have wins/TW recorded, the database won't find a
-> match under the old name and will start that "new" name at 0. Renaming is
-> safe before you've recorded any stats.
-
-## Local setup
-
-1. Install dependencies:
-   ```
-   npm install
-   ```
-2. Copy `.env.example` to `.env` and fill in:
-   - `DISCORD_TOKEN` — from the [Discord Developer Portal](https://discord.com/developers/applications)
-   - `OWNER_IDS` — your Discord user ID (comma-separated if more than one owner)
-3. In the Developer Portal, under your bot's **Bot** settings, enable the
-   **Message Content Intent** (required to read `pak ...` commands).
-4. Run it:
-   ```
-   npm start
-   ```
-
-## Deploying to Railway
-
-1. Push this project to a GitHub repo and create a new Railway project from it.
-2. In Railway, add a **Volume** to the service (e.g. mount path `/data`).
-3. Set environment variables on the Railway service:
-   - `DISCORD_TOKEN`
-   - `OWNER_IDS`
-   - `DB_PATH=/data/pakstats.db` (must point inside the mounted volume so the
-     database survives redeploys)
-   - optionally `RATING_WIN_WEIGHT` / `RATING_TW_WEIGHT`
-4. Railway will detect the Node app from `package.json` and run `npm start`
-   automatically.
-5. Make sure `assets/players/*.png` and `assets/roster.png` are committed to
-   the repo — they ship with the code, no external image hosting is used.
-
-## Inviting the bot
-
-Generate an invite URL in the Developer Portal (OAuth2 → URL Generator) with
-the `bot` scope and at minimum the **Send Messages**, **Embed Links**, and
-**Attach Files** permissions, plus **Read Message History** if you want it to
-work smoothly in threads/channels with history.
-
-## Notes on data storage
-
-- Only **wins** and **TW** are stored in SQLite (`data/pakstats.db` locally,
-  or the Railway Volume path in production). Everything else (name, picture,
-  strengths, weaknesses) is static and lives in `players.seed.json` +
-  `assets/`, so it's easy to hand-edit without touching a database.
-- Max 18 players is enforced by convention (the seed file); the bot will warn
-  in the logs if you add more than 18 entries but won't hard-block it.
+- `npm test` runs the tests.
+- `npm run ban -- <userId> [reason]` / `--unban` (needs `GUILD_ID`).
+- `npm run say -- <channelId> [message]` posts as the bot.

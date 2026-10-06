@@ -1,11 +1,12 @@
 {
-  "name": "pak-stats-bot",
-  "version": "1.0.0",
-  "description": "Private Discord bot for Pak team stats",
+  "name": "team-pakistan-bot",
+  "version": "2.0.0",
+  "description": "Team Pakistan Discord bot: player stats, match results, and VS/Nick/EA role tools",
   "main": "src/index.js",
   "type": "commonjs",
   "scripts": {
     "start": "node src/index.js",
+    "test": "node --test \"src/**/*.test.js\"",
     "ban": "node src/ban.js",
     "say": "node src/say.js"
   },
