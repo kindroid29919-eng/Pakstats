@@ -1,5 +1,5 @@
 // Terminal ban tool — run this directly on the machine hosting the bot
-// (locally, or in a Railway shell) instead of typing "pak ban <id>" in Discord.
+// (locally, or in a Railway shell) instead of typing a ban command in Discord.
 //
 // Usage:
 //   node src/ban.js <userId> [reason...]
@@ -9,12 +9,12 @@
 //   node src/ban.js 123456789012345678 Spamming links
 //   npm run ban -- 123456789012345678 Spamming links
 //
-// Requires DISCORD_TOKEN and GUILD_ID to be set (.env locally, or Railway
+// Requires DISCORD_BOT_TOKEN (or DISCORD_TOKEN) and GUILD_ID to be set (.env locally, or Railway
 // service variables). The bot must have the "Ban Members" permission in
 // that server.
 
 const { Client, GatewayIntentBits } = require('discord.js');
-const config = require('./config');
+const { getRuntimeConfig } = require('./config');
 
 function printUsageAndExit() {
   console.error('Usage: node src/ban.js <userId> [reason...]');
@@ -23,6 +23,13 @@ function printUsageAndExit() {
 }
 
 async function main() {
+  let config;
+  try {
+    config = getRuntimeConfig();
+  } catch (err) {
+    console.error(err.message);
+    process.exit(1);
+  }
   const args = process.argv.slice(2);
   if (args.length === 0) printUsageAndExit();
 

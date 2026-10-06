@@ -11,7 +11,7 @@
 //     node src/say.js <channelId>
 //     npm run say -- <channelId>
 //
-// Requires DISCORD_TOKEN in the environment. The bot must already be a
+// Requires DISCORD_BOT_TOKEN (or DISCORD_TOKEN) in the environment. The bot must already be a
 // member of the server that channel belongs to, with permission to send
 // messages there.
 //
@@ -20,7 +20,7 @@
 
 const readline = require('readline');
 const { Client, GatewayIntentBits } = require('discord.js');
-const config = require('./config');
+const { getRuntimeConfig } = require('./config');
 
 function printUsageAndExit() {
   console.error('Usage: node src/say.js <channelId> [message...]');
@@ -29,6 +29,13 @@ function printUsageAndExit() {
 }
 
 async function main() {
+  let config;
+  try {
+    config = getRuntimeConfig();
+  } catch (err) {
+    console.error(err.message);
+    process.exit(1);
+  }
   const args = process.argv.slice(2);
   if (args.length === 0) printUsageAndExit();
 
